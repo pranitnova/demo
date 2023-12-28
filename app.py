@@ -3,11 +3,13 @@ import streamlit as st
 
 # Constants
 
-conversion_rate = 1.11
+conversion_rate = st.sidebar.slider("**Conversion (Eur € - Dol $)**", 1.0, 1.5, 1.11)
+
 layer_1 = round(1400 * conversion_rate)
 layer_2 = round(2000 * conversion_rate)
 layer_3 = round(2600 * conversion_rate)
 
+st.sidebar.divider()
 
 # Sidebar Section
 st.sidebar.write("**Cartridge Cost**")
@@ -25,7 +27,11 @@ st.sidebar.write(
 
 st.sidebar.divider()
 production_capacity = st.sidebar.number_input(
-    "**Production Capacity (month)**", min_value=10000, max_value=60000, step=1000
+    "**Production Capacity (month)**",
+    min_value=10000,
+    max_value=60000,
+    step=1000,
+    value=30000,
 )
 
 
@@ -33,13 +39,13 @@ st.sidebar.divider()
 slider_val = st.sidebar.slider(
     "**Number of Cartridges (year)**", 1, 100, round((production_capacity / 5000) * 12)
 )
-st.sidebar.caption(f"*Production Capacity (year):* `{slider_val*5000}`")
+st.sidebar.caption(f"*Annual Production:* `{slider_val*5000}`")
 
 
 # Main Page
 
 st.caption(
-    f"Annual Production Capacity: **`{slider_val*5000}`**,\t  Annual Cartridge Required: **`{slider_val}`**"
+    f"Annual Production: **`{slider_val*5000}`**,\t  Annual Cartridge Required: **`{slider_val}`**"
 )
 st.write("With Contract (**`1 Year`**)")
 st.caption(
@@ -83,9 +89,9 @@ st.caption(
     f"""
 - This does not include the device & the shipping cost.
 - Devices + Shipping Cost (*€{20000}*): **`${round(20000 * conversion_rate)}`**   
-- Variable Ink Price.
+- Variable Ink Price (Future changes in prices are not covered).
 
-Paying for - **`{slider_val}`** cartridges, device, shipping 
+Paying for - **`{slider_val}`** cartridges, device & shipping! 
 """
 )
 
